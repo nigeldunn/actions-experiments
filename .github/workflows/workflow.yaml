@@ -22,5 +22,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: echo "${{ env.some_var }}"
+      - run: echo "${{ env.some_var }}" #this value will be empty
       - run: echo "${{ needs.job_1.outputs.some_var }}"
