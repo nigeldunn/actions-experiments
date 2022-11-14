@@ -7,11 +7,17 @@ env:
 jobs:
   job_1:
     runs-on: ubuntu-latest
+    outputs:
+      some_var: ${{ steps.some_output.outputs.some_var}}
     steps:
       - uses: actions/checkout@v3
       - run: echo "some_var=sOmE-vAlU3" >> $GITHUB_ENV
         shell: bash
+      - id: some_output
+        run: echo "some_var=sOmE-vAlU3" >> $GITHUB_OUTPUT
+        shell: bash
       - run: echo "${{ env.some_var }}"
+      - run: echo "${{ steps.some_output.outputs.some_var }}"
 
   job_2:
     needs: job_1
@@ -19,4 +25,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: echo "${{ env.some_var }}"
-
+      - run: echo "${{ needs.job_1.outputs.some_var }}"
